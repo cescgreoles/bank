@@ -1,0 +1,12 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  grid-row-start: 2;
+  padding: 3rem 7em;
+  align-items: center;
+  position: relative;
+}
+.image {
+  border-radius: 10px;
+}
