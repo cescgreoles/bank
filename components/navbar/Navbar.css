@@ -10,3 +10,29 @@
   font-weight: 700;
   text-transform: uppercase;
 }
+
+.nav-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.inputs-container {
+  display: flex;
+  align-items: center;
+}
+
+.acceder-btn {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .inputs-container {
+    display: none;
+  }
+
+  .acceder-btn {
+    display: block;
+    width: 100%;
+  }
+}

@@ -28,10 +28,14 @@ const Home = () => {
         }}
       >
         <CarouselContent className="-ml-1">
-          {images.map((url) => (
-            <CarouselItem key={url} className="pl-2 md:basis-1/2 lg:basis-1/3 ">
-              <AspectRatio ratio={1}>
-                <img src={url} alt="" className="image" />
+          {[
+            "https://picsum.photos/1920/300",
+            "https://picsum.photos/1920/300",
+            "https://picsum.photos/1920/300",
+          ].map((url) => (
+            <CarouselItem key={url} className="pl-2 w-full">
+              <AspectRatio ratio={16 / 3}>
+                <img src={url} alt="" className="w-full h-full object-cover" />
               </AspectRatio>
             </CarouselItem>
           ))}
@@ -40,6 +44,12 @@ const Home = () => {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
+      <h2>What do you need?</h2>
+      <div className="btns-container">
+        <Button className="m-1">Open Account</Button>
+        <Button className="m-1">Transfer Money</Button>
+        <Button className="m-1">Pay Bills</Button>
+      </div>
     </main>
   );
 };
