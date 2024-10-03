@@ -1,12 +1,8 @@
 .main {
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  grid-row-start: 2;
   align-items: center;
   position: relative;
-  margin: 0;
-  padding: 0;
 }
 .image {
   border-radius: 10px;

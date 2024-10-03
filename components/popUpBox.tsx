@@ -52,9 +52,8 @@ const PopUpBox: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-wrap gap-4 mb-8 justify-center">
+    <div className="flex flex-wrap gap-4 m-4 mb-8 justify-center">
       {" "}
-      {/* Añadido justify-center */}
       {Array.from({ length: 4 }).map((_, index) => (
         <div
           key={index}

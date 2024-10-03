@@ -11,6 +11,7 @@ import {
   ArrowRightOnRectangleIcon,
   BanknotesIcon,
 } from "@heroicons/react/24/outline";
+import Footer from "@/components/footer/Footer";
 
 const Home = () => {
   const images = [
@@ -31,7 +32,7 @@ const Home = () => {
     handleResize();
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 2000);
+    }, 1500);
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -74,7 +75,7 @@ const Home = () => {
           );
         })}
       </div>
-      <div className="flex flex-col md:flex-row items-center justify-center md:justify-start md:space-x-4 space-y-4 md:space-y-0">
+      <div className="m-3 flex flex-col md:flex-row items-center justify-center md:justify-start md:space-x-4 space-y-4 md:space-y-0">
         <div className="w-full md:w-48 m-1">
           <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow-lg transition duration-300 transform hover:scale-105">
             <div className="flex items-center justify-center">
@@ -99,8 +100,8 @@ const Home = () => {
           </Button>
         </div>
       </div>
-
       <PopUpBox />
+      <Footer />
     </main>
   );
 };
