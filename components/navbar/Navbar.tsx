@@ -24,7 +24,7 @@ const Navbar = () => {
   const handleClose = () => setOpen(false);
 
   return (
-    <nav className="flex md:flex-row md:items-center justify-between p-4">
+    <nav className="flex md:flex-row md:items-center justify-between p-4 border 1px solid ">
       {/* Contenedor del Logo y el Nombre */}
       <div className="flex items-center justify-center">
         <Link href="/" className="flex items-center justify-center">
@@ -47,6 +47,9 @@ const Navbar = () => {
         <div className="hidden md:flex items-center">
           <Button variant="ghost" className="font-bold" asChild>
             <Link href="/">Inicio</Link>
+          </Button>
+          <Button variant="ghost" className="font-bold" asChild>
+            <Link href="/dashboard">Cuenta</Link>
           </Button>
           <Button variant="ghost" className="font-bold" asChild>
             <Link href="/about">Quién somos?</Link>
