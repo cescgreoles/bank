@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,7 +16,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
-} from "firebase/auth"; // Importar los métodos de Firebase
+} from "firebase/auth";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -134,9 +134,9 @@ const Navbar = () => {
                 <span className="mr-2">
                   Hola, {user.displayName || user.email}
                 </span>
-                {/* <Link href="/profile">
+                <Link href="/profile">
                   <Button className="m-1">Perfil</Button>
-                </Link> */}
+                </Link>
                 <Button className="m-1" onClick={handleLogout}>
                   Cerrar sesión
                 </Button>
