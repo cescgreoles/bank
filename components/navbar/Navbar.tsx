@@ -84,7 +84,7 @@ const Navbar = () => {
             <>
               <Button onClick={() => handleOpen(false)}>Acceder</Button>
               <Button onClick={() => handleOpen(true)} className="m-1">
-                Registrarse
+                Registrarses
               </Button>
             </>
           ) : (
