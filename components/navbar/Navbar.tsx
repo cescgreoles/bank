@@ -16,8 +16,9 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
-  updateProfile, // Asegúrate de importar esta función
+  updateProfile,
 } from "firebase/auth";
+import { UserCircleIcon } from "@heroicons/react/20/solid";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -71,15 +72,13 @@ const Navbar = () => {
   return (
     <nav className="flex md:flex-row md:items-center justify-between p-4 border-1 border-solid">
       <div className="flex items-center justify-center">
-        <Link href="/" passHref>
-          <a className="flex items-center justify-center">
-            <Image src="/favicon.png" alt="Your Bank" width={30} height={20} />
-            <h2 className="ml-2 font-semibold">YOUR BANK</h2>
-          </a>
+        <Link href="/" className="flex items-center justify-center" passHref>
+          <Image src="/favicon.png" alt="Your Bank" width={30} height={20} />
+          <h2 className="ml-2 font-semibold">YOUR BANK</h2>
         </Link>
       </div>
 
-      <div className="nav-right flex flex-col md:flex-row items-center">
+      <div className="nav-right flex flex-col md:flex-row items-center text-center">
         <div className="flex items-center justify-center md:hidden">
           {!user ? (
             <>
@@ -89,7 +88,16 @@ const Navbar = () => {
               </Button>
             </>
           ) : (
-            <Button onClick={handleLogout}>Cerrar sesión</Button>
+            <div className="flex items-center">
+              <Link href="/profile">
+                <Button className="m-1 flex items-center">
+                  <UserCircleIcon className="h-5 w-5 mr-1" aria-hidden="true" />
+                </Button>
+              </Link>
+              <Button onClick={handleLogout} className="m-1">
+                Cerrar sesión
+              </Button>
+            </div>
           )}
         </div>
 
@@ -103,7 +111,7 @@ const Navbar = () => {
           <Button variant="ghost" className="font-bold" asChild>
             <Link href="/about">Quién somos?</Link>
           </Button>
-          <div className="inputs-container flex">
+          <div className="inputs-container flex justify-center items-center">
             {!user ? (
               <>
                 <Input
@@ -129,15 +137,22 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <span className="mr-2">
-                  Hola, {user.displayName || user.email}
-                </span>
-                <Link href="/profile">
-                  <Button className="m-1">Perfil</Button>
-                </Link>
-                <Button className="m-1" onClick={handleLogout}>
-                  Cerrar sesión
-                </Button>
+                <div className="flex items-center justify-center">
+                  <span className="mr-2 text-center">
+                    Hola, {user.displayName || user.email}
+                  </span>
+                  <Link href="/profile">
+                    <Button className="m-1 flex items-center">
+                      <UserCircleIcon
+                        className="h-5 w-5 mr-1"
+                        aria-hidden="true"
+                      />
+                    </Button>
+                  </Link>
+                  <Button className="m-1" onClick={handleLogout}>
+                    Cerrar sesión
+                  </Button>
+                </div>
               </>
             )}
           </div>

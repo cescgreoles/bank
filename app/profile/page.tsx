@@ -5,20 +5,20 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { updateProfile } from "firebase/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 const Profile = () => {
   const [user] = useAuthState(auth);
   const [name, setName] = useState(user?.displayName || "");
   const [email, setEmail] = useState(user?.email || "");
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
     if (!user) {
-      router.push("/"); // Redirige a la página de inicio si no hay usuario autenticado
+      // No se necesita redirección aquí si estás usando Link en el logout
+      setError("No estás autenticado");
     }
-  }, [user, router]);
+  }, [user]);
 
   const handleUpdateProfile = async () => {
     setError(null);
@@ -34,7 +34,7 @@ const Profile = () => {
 
   const handleLogout = async () => {
     await auth.signOut();
-    router.push("/"); // Redirige a la página de inicio después de cerrar sesión
+    // Aquí no necesitas redirigir, ya que se usará Link para regresar a la página de inicio.
   };
 
   return (
@@ -60,13 +60,15 @@ const Profile = () => {
           <Button onClick={handleUpdateProfile} className="w-full mr-2">
             Actualizar Perfil
           </Button>
-          <Button
-            onClick={handleLogout}
-            className="w-full ml-2"
-            variant="ghost"
-          >
-            Cerrar Sesión
-          </Button>
+          <Link href="/" passHref>
+            <Button
+              onClick={handleLogout}
+              className="w-full ml-2"
+              variant="ghost"
+            >
+              Cerrar Sesión
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
