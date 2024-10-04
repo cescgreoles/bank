@@ -11,32 +11,31 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { auth } from "@/lib/firebaseConfig";
-import { useAuthState } from "react-firebase-hooks/auth"; // Hook para controlar el estado de autenticación
+import { useAuthState } from "react-firebase-hooks/auth";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
+  updateProfile, // Asegúrate de importar esta función
 } from "firebase/auth";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const [isRegistering, setIsRegistering] = useState(true); // Estado para alternar entre "Acceder" y "Registro"
-  const [email, setEmail] = useState(""); // Estado para el email
-  const [password, setPassword] = useState(""); // Estado para la contraseña
-  const [name, setName] = useState(""); // Estado para el nombre (en caso de registro)
-  const [error, setError] = useState<string | null>(null); // Estado para errores
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
-  // Estado de autenticación del usuario
   const [user] = useAuthState(auth);
 
-  // Abre el modal para login o registro
   const handleOpen = (registering: boolean) => {
-    setIsRegistering(registering); // Alterna entre "Acceder" y "Registrar"
+    setIsRegistering(registering);
     setOpen(true);
   };
+
   const handleClose = () => setOpen(false);
 
-  // Función para manejar el login
   const handleLogin = async () => {
     setError(null);
     try {
@@ -47,7 +46,6 @@ const Navbar = () => {
     }
   };
 
-  // Función para manejar el registro
   const handleRegister = async () => {
     setError(null);
     try {
@@ -56,31 +54,32 @@ const Navbar = () => {
         email,
         password
       );
-      // Opcional: Guardar nombre del usuario en Firestore
+      // Actualizar el nombre del usuario en Firebase
+      await updateProfile(userCredential.user, {
+        displayName: name,
+      });
       handleClose();
     } catch (error: any) {
       setError("Error al registrarse: " + error.message);
     }
   };
 
-  // Función para cerrar sesión
   const handleLogout = async () => {
     await signOut(auth);
   };
 
   return (
-    <nav className="flex md:flex-row md:items-center justify-between p-4 border 1px solid">
-      {/* Contenedor del Logo y el Nombre */}
+    <nav className="flex md:flex-row md:items-center justify-between p-4 border-1 border-solid">
       <div className="flex items-center justify-center">
-        <Link href="/" className="flex items-center justify-center">
-          <Image src="/favicon.png" alt="Your Bank" width={30} height={20} />
-          <h2 className="ml-2 font-semibold items-center ">YOUR BANK</h2>
+        <Link href="/" passHref>
+          <a className="flex items-center justify-center">
+            <Image src="/favicon.png" alt="Your Bank" width={30} height={20} />
+            <h2 className="ml-2 font-semibold">YOUR BANK</h2>
+          </a>
         </Link>
       </div>
 
-      {/* Contenedor del menú */}
       <div className="nav-right flex flex-col md:flex-row items-center">
-        {/* Solo visible en dispositivos móviles */}
         <div className="flex items-center justify-center md:hidden">
           {!user ? (
             <>
@@ -94,7 +93,6 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Contenido para pantallas grandes */}
         <div className="hidden md:flex items-center">
           <Button variant="ghost" className="font-bold" asChild>
             <Link href="/">Inicio</Link>
@@ -117,7 +115,7 @@ const Navbar = () => {
                 />
                 <Input
                   type="password"
-                  placeholder="Contrasenya"
+                  placeholder="Contraseña"
                   className="m-1"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -146,14 +144,12 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Diálogo dinámico de acceso/registro visible en ambas vistas */}
       <Dialog open={open} onOpenChange={handleClose}>
         <DialogContent className="bg-white text-gray-800 rounded-lg shadow-lg p-6">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-center">
               {isRegistering ? "Registro" : "Acceder"}
             </DialogTitle>
-            {/* Campos de acceso o registro */}
             <div className="my-4">
               <Input
                 type="email"
@@ -164,7 +160,7 @@ const Navbar = () => {
               />
               <Input
                 type="password"
-                placeholder="Contrasenya"
+                placeholder="Contraseña"
                 className="mb-2"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
