@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,21 +10,66 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { auth } from "@/lib/firebaseConfig"; // Importa la configuración de Firebase
+import { useAuthState } from "react-firebase-hooks/auth"; // Hook para controlar el estado de autenticación
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+} from "firebase/auth"; // Importar los métodos de Firebase
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [isRegistering, setIsRegistering] = useState(true); // Estado para alternar entre "Acceder" y "Registro"
+  const [email, setEmail] = useState(""); // Estado para el email
+  const [password, setPassword] = useState(""); // Estado para la contraseña
+  const [name, setName] = useState(""); // Estado para el nombre (en caso de registro)
+  const [error, setError] = useState<string | null>(null); // Estado para errores
 
-  const handleOpen = (
-    registering: boolean | ((prevState: boolean) => boolean)
-  ) => {
-    setIsRegistering(registering); // Establece el modo de "Acceder" o "Registro"
+  // Estado de autenticación del usuario
+  const [user] = useAuthState(auth);
+
+  // Abre el modal para login o registro
+  const handleOpen = (registering: boolean) => {
+    setIsRegistering(registering); // Alterna entre "Acceder" y "Registrar"
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
 
+  // Función para manejar el login
+  const handleLogin = async () => {
+    setError(null);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      handleClose();
+    } catch (error: any) {
+      setError("Error al acceder: " + error.message);
+    }
+  };
+
+  // Función para manejar el registro
+  const handleRegister = async () => {
+    setError(null);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      // Opcional: Guardar nombre del usuario en Firestore
+      handleClose();
+    } catch (error: any) {
+      setError("Error al registrarse: " + error.message);
+    }
+  };
+
+  // Función para cerrar sesión
+  const handleLogout = async () => {
+    await signOut(auth);
+  };
+
   return (
-    <nav className="flex md:flex-row md:items-center justify-between p-4 border 1px solid ">
+    <nav className="flex md:flex-row md:items-center justify-between p-4 border 1px solid">
       {/* Contenedor del Logo y el Nombre */}
       <div className="flex items-center justify-center">
         <Link href="/" className="flex items-center justify-center">
@@ -37,10 +82,16 @@ const Navbar = () => {
       <div className="nav-right flex flex-col md:flex-row items-center">
         {/* Solo visible en dispositivos móviles */}
         <div className="flex items-center justify-center md:hidden">
-          <Button onClick={() => handleOpen(false)}>Acceder</Button>
-          <Button onClick={() => handleOpen(true)} className="m-1">
-            Registrarse
-          </Button>
+          {!user ? (
+            <>
+              <Button onClick={() => handleOpen(false)}>Acceder</Button>
+              <Button onClick={() => handleOpen(true)} className="m-1">
+                Registrarse
+              </Button>
+            </>
+          ) : (
+            <Button onClick={handleLogout}>Cerrar sesión</Button>
+          )}
         </div>
 
         {/* Contenido para pantallas grandes */}
@@ -55,12 +106,42 @@ const Navbar = () => {
             <Link href="/about">Quién somos?</Link>
           </Button>
           <div className="inputs-container flex">
-            <Input type="email" placeholder="E-mail" className="m-1" />
-            <Input type="password" placeholder="Contrasenya" className="m-1" />
-            <Button className="m-1">Acceder</Button>
-            <Button onClick={() => handleOpen(true)} className="m-1">
-              Registrarse
-            </Button>
+            {!user ? (
+              <>
+                <Input
+                  type="email"
+                  placeholder="E-mail"
+                  className="m-1"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <Input
+                  type="password"
+                  placeholder="Contrasenya"
+                  className="m-1"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <Button className="m-1" onClick={handleLogin}>
+                  Acceder
+                </Button>
+                <Button onClick={() => handleOpen(true)} className="m-1">
+                  Registrarse
+                </Button>
+              </>
+            ) : (
+              <>
+                <span className="mr-2">
+                  Hola, {user.displayName || user.email}
+                </span>
+                {/* <Link href="/profile">
+                  <Button className="m-1">Perfil</Button>
+                </Link> */}
+                <Button className="m-1" onClick={handleLogout}>
+                  Cerrar sesión
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -74,19 +155,34 @@ const Navbar = () => {
             </DialogTitle>
             {/* Campos de acceso o registro */}
             <div className="my-4">
-              <Input type="email" placeholder="E-mail" className="mb-2" />
+              <Input
+                type="email"
+                placeholder="E-mail"
+                className="mb-2"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
               <Input
                 type="password"
                 placeholder="Contrasenya"
                 className="mb-2"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               {isRegistering && (
-                <Input type="text" placeholder="Nombre" className="mb-2" />
+                <Input
+                  type="text"
+                  placeholder="Nombre"
+                  className="mb-2"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
               )}
+              {error && <p className="text-red-500">{error}</p>}
             </div>
           </DialogHeader>
           <div className="flex justify-center">
-            <Button onClick={handleClose}>
+            <Button onClick={isRegistering ? handleRegister : handleLogin}>
               {isRegistering ? "Registrar" : "Acceder"}
             </Button>
           </div>
