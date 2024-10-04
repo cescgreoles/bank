@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { auth } from "@/lib/firebaseConfig"; // Importa la configuración de Firebase
+import { auth } from "@/lib/firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth"; // Hook para controlar el estado de autenticación
 import {
   signInWithEmailAndPassword,
