@@ -87,8 +87,8 @@ const Home = () => {
         <div className="w-full md:w-48 m-1">
           <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow-lg transition duration-300 transform hover:scale-105">
             <div className="flex items-center justify-center">
-              <ArrowRightOnRectangleIcon className="h-5 w-5 mr-2" />{" "}
-              Transferencias
+              <ArrowRightOnRectangleIcon className="h-5 w-5 mr-2" /> Comparte y
+              gana
             </div>
           </Button>
         </div>

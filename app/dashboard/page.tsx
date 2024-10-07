@@ -35,7 +35,6 @@ const Dashboard = () => {
         </ul>
       </div>
 
-      {/* Próximos Pagos */}
       <div className="bg-white shadow-md rounded-lg p-6 mb-6">
         <h2 className="text-xl font-semibold">Próximos Pagos</h2>
         <ul className="mt-4">
@@ -50,7 +49,6 @@ const Dashboard = () => {
         </ul>
       </div>
 
-      {/* Meta de Ahorro */}
       <div className="bg-white shadow-md rounded-lg p-6 mb-6">
         <h2 className="text-xl font-semibold">Meta de Ahorro</h2>
         <div className="mt-4">
@@ -64,7 +62,6 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Botones Rápidos */}
       <div className="bg-white shadow-md rounded-lg p-6 mb-6">
         <h2 className="text-xl font-semibold">Acciones Rápidas</h2>
         <div className="flex space-x-4 mt-4">
@@ -77,7 +74,6 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Ofertas y Promociones */}
       <div className="bg-white shadow-md rounded-lg p-6 mb-6">
         <h2 className="text-xl font-semibold">Ofertas y Promociones</h2>
         <p className="mt-4">Tarjeta de Crédito con 0% de Interés por 6 meses</p>

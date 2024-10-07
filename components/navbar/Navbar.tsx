@@ -19,6 +19,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { UserCircleIcon } from "@heroicons/react/20/solid";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -37,13 +38,15 @@ const Navbar = () => {
 
   const handleClose = () => setOpen(false);
 
+  const router = useRouter();
+
   const handleLogin = async () => {
     setError(null);
     try {
       await signInWithEmailAndPassword(auth, email, password);
       handleClose();
     } catch (error: any) {
-      setError("Error al acceder: " + error.message);
+      setError("Error al acceder");
     }
   };
 
@@ -55,18 +58,18 @@ const Navbar = () => {
         email,
         password
       );
-      // Actualizar el nombre del usuario en Firebase
       await updateProfile(userCredential.user, {
         displayName: name,
       });
       handleClose();
     } catch (error: any) {
-      setError("Error al registrarse: " + error.message);
+      setError("Error al registrarse");
     }
   };
 
   const handleLogout = async () => {
     await signOut(auth);
+    router.push("/");
   };
 
   return (
@@ -84,7 +87,7 @@ const Navbar = () => {
             <>
               <Button onClick={() => handleOpen(false)}>Acceder</Button>
               <Button onClick={() => handleOpen(true)} className="m-1">
-                Registrarses
+                Registrarse
               </Button>
             </>
           ) : (
@@ -102,15 +105,29 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center">
-          <Button variant="ghost" className="font-bold" asChild>
-            <Link href="/">Inicio</Link>
-          </Button>
-          <Button variant="ghost" className="font-bold" asChild>
-            <Link href="/dashboard">Cuenta</Link>
-          </Button>
-          <Button variant="ghost" className="font-bold" asChild>
-            <Link href="/about">Quién somos?</Link>
-          </Button>
+          {!user ? (
+            <>
+              <Button variant="ghost" className="font-bold" asChild>
+                <Link href="/">Inicio</Link>
+              </Button>
+              <Button variant="ghost" className="font-bold" asChild>
+                <Link href="/about">Quién somos?</Link>
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="ghost" className="font-bold" asChild>
+                <Link href="/">Inicio</Link>
+              </Button>
+              <Button variant="ghost" className="font-bold" asChild>
+                <Link href="/about">Quién somos?</Link>
+              </Button>
+              <Button variant="ghost" className="font-bold" asChild>
+                <Link href="/accounts">Mis Cuentas</Link>
+              </Button>
+            </>
+          )}
+
           <div className="inputs-container flex justify-center items-center">
             {!user ? (
               <>
@@ -128,6 +145,7 @@ const Navbar = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+
                 <Button className="m-1" onClick={handleLogin}>
                   Acceder
                 </Button>
@@ -138,7 +156,7 @@ const Navbar = () => {
             ) : (
               <>
                 <div className="flex items-center justify-center">
-                  <span className="mr-2 text-center">
+                  <span className="mr-2 text-center p-2">
                     Hola, {user.displayName || user.email}
                   </span>
                   <Link href="/profile">

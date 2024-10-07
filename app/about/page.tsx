@@ -17,12 +17,12 @@ const About = () => {
         <div className="flex flex-col md:flex-row items-center justify-center mb-6 space-y-4 md:space-y-0 md:space-x-4">
           <FaUniversity className="text-black-700" size={40} />
 
-          <p className="text-lg text-center max-w-3xl">
+          {/* <p className="text-lg text-center max-w-3xl">
             Somos un banco comprometido con nuestros clientes, ofreciendo
             soluciones financieras innovadoras y un servicio de calidad. Nuestra
             misión es ayudarte a alcanzar tus metas financieras y brindarte la
             mejor experiencia bancaria.
-          </p>
+          </p> */}
 
           <FaRegBuilding className="text-black-700" size={40} />
         </div>

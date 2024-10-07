@@ -27,7 +27,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center">
                 <FiMapPin className="mr-2 text-xl" />
-                <span>Calle Falsa 123, Madrid, España</span>
+                <span>Calle Falsa 123, Barcelona, España</span>
               </li>
             </ul>
           </div>
@@ -42,17 +42,12 @@ const Footer = () => {
               </li>
               <li>
                 <Link href="/solicitar-prestamo" className="hover:underline">
-                  Solicitar préstamo
+                  Quien somos
                 </Link>
               </li>
               <li>
                 <Link href="/servicios-tarjetas" className="hover:underline">
                   Servicios de tarjetas
-                </Link>
-              </li>
-              <li>
-                <Link href="/banca-online" className="hover:underline">
-                  Banca en línea
                 </Link>
               </li>
             </ul>

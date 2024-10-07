@@ -32,16 +32,16 @@ const PopUpBox: React.FC = () => {
 
   const infoTitles: string[] = [
     "Cuenta de Ahorro con Rendimiento Alto",
-    "Créditos Hipotecarios con Tasa Fija",
+    "Calcula tus gastos de casa",
     "Tarjeta de Crédito con Recompensas Exclusivas",
-    "Seguro de Vida Protegido", // Título de la cuarta carta
+    "Seguro de Vida Protegido",
   ];
 
   const infoTexts: string[] = [
     "Comienza a ahorrar hoy con nuestra cuenta de ahorro de alto rendimiento. Gana más intereses por tus ahorros, sin comisiones y con acceso a tu dinero en cualquier momento.",
-    "Compra la casa de tus sueños con nuestras hipotecas de tasa fija. Ofrecemos financiamiento flexible, pagos accesibles y tasas competitivas para ayudarte a conseguir tu hogar ideal.",
+    "Con nuestra calculadora de gastos de casa, podrás llevar un control de tus gastos mensuales y planificar tu presupuesto de forma eficiente.",
     "Disfruta de beneficios únicos con nuestra tarjeta de crédito. Obtén cashback, millas aéreas, y descuentos en comercios seleccionados. ¡Haz que cada compra cuente!",
-    "Protege a tu familia con nuestro seguro de vida. Ofrecemos coberturas flexibles y precios accesibles para brindarte tranquilidad en los momentos más difíciles.", // Texto de la cuarta carta
+    "Protege a tu familia con nuestro seguro de vida. Ofrecemos coberturas flexibles y precios accesibles para brindarte tranquilidad en los momentos más difíciles.",
   ];
 
   const infoIcons = [
