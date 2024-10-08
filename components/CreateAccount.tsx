@@ -6,7 +6,7 @@ import { auth } from "@/lib/firebaseConfig";
 import { User } from "firebase/auth";
 
 interface CrearCuentaProps {
-  onCuentaCreada: (cuenta: Cuenta) => void;
+  onCuentaCreada: (cuenta: Omit<Cuenta, "id">) => void;
   user: User;
 }
 
