@@ -36,17 +36,17 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Enlaces Útiles</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/abrir-cuenta" className="hover:underline">
+                <Link href="/register" className="hover:underline">
                   Abrir una cuenta
                 </Link>
               </li>
               <li>
-                <Link href="/solicitar-prestamo" className="hover:underline">
+                <Link href="/about" className="hover:underline">
                   Quien somos
                 </Link>
               </li>
               <li>
-                <Link href="/servicios-tarjetas" className="hover:underline">
+                <Link href="/" className="hover:underline">
                   Servicios de tarjetas
                 </Link>
               </li>
