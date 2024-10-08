@@ -3,5 +3,5 @@ export interface Cuenta {
   nombre: string;
   saldo: number;
   moneda: string;
-  userId?: string;
+  userId: string;
 }

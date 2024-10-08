@@ -1,21 +1,27 @@
 // CrearCuenta.tsx
+import { Cuenta } from "@/lib/types";
 import { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/lib/firebaseConfig";
+import { User } from "firebase/auth";
 
 interface CrearCuentaProps {
-  onCuentaCreada: (nombre: string, saldo: number, moneda: string) => void; // Define el tipo para el prop
+  onCuentaCreada: (cuenta: Cuenta) => void;
+  user: User;
 }
 
-const CrearCuenta: React.FC<CrearCuentaProps> = ({ onCuentaCreada }) => {
+const CrearCuenta: React.FC<CrearCuentaProps> = ({ onCuentaCreada, user }) => {
   const [nombre, setNombre] = useState<string>("");
-  const [saldo, setSaldo] = useState<number | "">(""); // Puede ser un número o vacío
-  const [moneda, setMoneda] = useState<string>("USD");
+  const [saldo, setSaldo] = useState<number | "">("");
+  const [moneda, setMoneda] = useState<string>("EUR");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (saldo !== "") {
-      onCuentaCreada(nombre, Number(saldo), moneda); // Llama al callback con los parámetros adecuados
+      onCuentaCreada({ moneda, saldo, nombre, userId: user.uid });
       setNombre("");
-      setSaldo(""); // Limpiar los campos
+      setSaldo("");
+      setMoneda("EUR");
     }
   };
 
@@ -30,6 +36,7 @@ const CrearCuenta: React.FC<CrearCuentaProps> = ({ onCuentaCreada }) => {
           required
         />
       </div>
+
       <div>
         <label>Saldo inicial:</label>
         <input
@@ -39,11 +46,12 @@ const CrearCuenta: React.FC<CrearCuentaProps> = ({ onCuentaCreada }) => {
           required
         />
       </div>
+
       <div>
         <label>Moneda:</label>
         <select value={moneda} onChange={(e) => setMoneda(e.target.value)}>
-          <option value="USD">USD</option>
           <option value="EUR">EUR</option>
+          <option value="USD">USD</option>
           <option value="MXN">MXN</option>
         </select>
       </div>

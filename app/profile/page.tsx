@@ -36,7 +36,7 @@ const Profile = () => {
 
   const handleLogout = async () => {
     await auth.signOut();
-    router.push("/"); // Redirect to home after logout
+    router.push("/");
   };
 
   return (
