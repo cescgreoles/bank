@@ -22,17 +22,19 @@ const Accounts: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <h1 className="text-3xl font-bold mb-6">Cuentas del Usuario</h1>
-      <ul className="w-full max-w-md bg-white rounded-lg shadow-md overflow-hidden">
+      <h1 className="text-3xl font-bold mb-8 text-gray-800">
+        Cuentas del Usuario
+      </h1>
+
+      <ul className="w-full max-w-md bg-white rounded-lg shadow-lg overflow-hidden p-2 m-2">
         {accounts.map((account) => (
-          <Link href={`/account/${account.id}`}>
-            <li
-              key={account.id}
-              className="border-b last:border-b-0 p-4 hover:bg-gray-50 transition flex gap-2 justify-between"
-            >
-              <p>{account.nombre}</p>
-              <p>{account.saldo}</p>
-              <p>{account.moneda}</p>
+          <Link href={`/account/${account.id}`} key={account.id}>
+            <li className="border-b last:border-b-0 p-4 hover:bg-gray-50 transition-colors duration-300 flex gap-4 justify-between items-center">
+              <p className="text-gray-800 font-medium">{account.nombre}</p>
+              <p className="text-gray-600 font-semibold">
+                {account.saldo.toLocaleString("es")}
+              </p>
+              <p className="text-sm text-gray-500">{account.moneda}</p>
             </li>
           </Link>
         ))}
