@@ -1,5 +1,13 @@
 import { db, auth } from "@/lib/firebaseConfig";
-import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  deleteDoc,
+  doc,
+  addDoc,
+} from "firebase/firestore";
 import { Cuenta, Movimiento, TipoMovimiento } from "@/lib/types";
 import { User } from "firebase/auth";
 
@@ -65,4 +73,25 @@ export const calcularSaldo = (
       return total - movimiento.dinero;
     return total + movimiento.dinero;
   }, saldoInicial);
+};
+
+export const eliminarCuenta = async (accountId: string) => {
+  if (!accountId) throw new Error("El ID de la cuenta es requerido");
+
+  const movimientosCollection = collection(db, "movimientos");
+  const q = query(movimientosCollection, where("accountId", "==", accountId));
+  const movimientosSnapshot = await getDocs(q);
+
+  const eliminarMovimientos = movimientosSnapshot.docs.map(
+    async (movimientoDoc) => {
+      await deleteDoc(doc(db, "movimientos", movimientoDoc.id));
+    }
+  );
+  await Promise.all(eliminarMovimientos);
+  await deleteDoc(doc(db, "cuentas", accountId));
+};
+
+export const eliminarMovimiento = async (movimientoId: string) => {
+  if (!movimientoId) throw new Error("El ID del movimiento es requerido");
+  await deleteDoc(doc(db, "movimientos", movimientoId));
 };

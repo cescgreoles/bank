@@ -101,7 +101,6 @@ const Home = () => {
         </div>
       </div>
       <PopUpBox />
-      <Footer />
     </main>
   );
 };

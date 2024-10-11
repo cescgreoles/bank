@@ -142,7 +142,6 @@ const About = () => {
           </AccordionItem>
         </Accordion>
       </div>
-      <Footer />
     </main>
   );
 };

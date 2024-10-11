@@ -30,7 +30,7 @@ const CrearCuenta: React.FC<CrearCuentaProps> = ({ onCuentaCreada, user }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-lg w-full mx-auto space-y-6 p-6 bg-white shadow-md rounded-lg"
+      className="max-w-lg w-full mx-auto space-y-6 p-6 bg-white  rounded-lg"
     >
       <div className="flex flex-col">
         <Label

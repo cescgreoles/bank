@@ -44,44 +44,44 @@ const Account = ({ params: { accountId } }: Props) => {
   console.log(account.saldo);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-7xl mx-auto p-4">
       <div
         key={account.id}
-        className="border-b last:border-b-0 p-4 bg-white shadow-md rounded-lg flex items-center justify-between"
+        className="border-b last:border-b-0 p-4 bg-white rounded-lg flex items-center justify-between sm:px-6 sm:py-4 border 1px"
       >
-        <p className="text-lg font-medium">{account.nombre}</p>
+        <p className="text-lg uppercase font-bold">{account.nombre}</p>
         <p className="text-lg font-semibold">
           {account.saldo.toLocaleString("es")} {account.moneda}
         </p>
       </div>
 
-      <ul className="w-full max-w-md bg-white rounded-lg shadow-md overflow-hidden">
+      <ul className="w-full bg-white rounded-lg border 1px overflow-hidden">
         {movimientos.map((movimiento) => (
           <li
             key={movimiento.id}
-            className="border-b last:border-b-0 p-4 hover:bg-gray-50 transition flex items-center gap-4 justify-between"
+            className="border-b last:border-b-0 p-4 hover:bg-gray-50 transition flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
           >
             <p className="text-gray-700">{movimiento.descripcion}</p>
-
-            <p
-              className={cn(
-                "font-bold text-lg",
-                movimiento.tipo === TipoMovimiento.GASTO && "text-red-600",
-                movimiento.tipo === TipoMovimiento.INGRESO && "text-green-600"
-              )}
-            >
-              {`${
-                movimiento.tipo === TipoMovimiento.GASTO ? "- " : "+ "
-              }${movimiento.dinero.toLocaleString("es")}`}
-            </p>
-
-            <p className="text-gray-500 text-sm">
-              {movimiento.fecha.toLocaleDateString("es", {
-                day: "2-digit",
-                month: "short",
-                year: "numeric",
-              })}
-            </p>
+            <div className="flex items-center justify-between w-full sm:w-auto sm:gap-4">
+              <p
+                className={cn(
+                  "font-bold text-lg",
+                  movimiento.tipo === TipoMovimiento.GASTO && "text-red-600",
+                  movimiento.tipo === TipoMovimiento.INGRESO && "text-green-600"
+                )}
+              >
+                {`${
+                  movimiento.tipo === TipoMovimiento.GASTO ? "- " : "+ "
+                }${movimiento.dinero.toLocaleString("es")}`}
+              </p>
+              <p className="text-gray-500 text-sm">
+                {movimiento.fecha.toLocaleDateString("es", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                })}
+              </p>
+            </div>
           </li>
         ))}
       </ul>

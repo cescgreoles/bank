@@ -11,11 +11,26 @@ export enum TipoMovimiento {
   GASTO = "GASTO",
 }
 
+export enum CategoriaMovimiento {
+  SUELDO = "SUELDO",
+  REGALO = "REGALO",
+  VENTA = "VENTA",
+  OCIO = "OCIO",
+  SUPERMERCADO = "SUPERMERCADO",
+  TRANSPORTE = "TRANSPORTE",
+  RESTAURANTE = "RESTAURANTE",
+  SALUD = "SALUD",
+  ALQUILER = "ALQUILER",
+  EDUCACION = "EDUCACION",
+  OTROS = "OTROS",
+}
+
 export interface Movimiento {
   id: string;
   fecha: Date;
   dinero: number;
   descripcion: string;
   tipo: TipoMovimiento;
+  categoria: CategoriaMovimiento;
   accountId: string;
 }
