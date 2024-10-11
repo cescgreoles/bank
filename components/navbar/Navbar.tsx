@@ -27,6 +27,7 @@ const Navbar = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [secretCode, setSecretCode] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   const [user] = useAuthState(auth);
@@ -52,6 +53,13 @@ const Navbar = () => {
 
   const handleRegister = async () => {
     setError(null);
+    const correctSecretCode = process.env.NEXT_PUBLIC_SECRET_CODE;
+
+    if (secretCode !== correctSecretCode) {
+      setError("Código secreto incorrecto");
+      return;
+    }
+
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -199,13 +207,22 @@ const Navbar = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
               {isRegistering && (
-                <Input
-                  type="text"
-                  placeholder="Nombre"
-                  className="mb-2"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
+                <>
+                  <Input
+                    type="text"
+                    placeholder="Nombre"
+                    className="mb-2"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <Input
+                    type="text"
+                    placeholder="Código Secreto"
+                    className="mb-2"
+                    value={secretCode}
+                    onChange={(e) => setSecretCode(e.target.value)}
+                  />
+                </>
               )}
               {error && <p className="text-red-500">{error}</p>}
             </div>

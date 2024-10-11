@@ -6,13 +6,32 @@ import {
   crearMovimiento,
   obtenerCuentas,
   obtenerMovimientos,
+  eliminarMovimiento,
 } from "@/lib/accountsServices";
-import { auth, db } from "@/lib/firebaseConfig";
+import { auth } from "@/lib/firebaseConfig";
 import { Cuenta, Movimiento, TipoMovimiento } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { collection, query, where, getDocs, and } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+} from "chart.js";
+
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement
+);
 
 interface Props {
   params: {
@@ -40,14 +59,42 @@ const Account = ({ params: { accountId } }: Props) => {
     fetch();
   }, [account]);
 
+  const handleEliminarMovimiento = async (movimientoId: string) => {
+    if (!movimientoId) return;
+    try {
+      await eliminarMovimiento(movimientoId);
+      setMovimientos(await obtenerMovimientos(account.id));
+    } catch (error) {
+      console.error("Error al eliminar el movimiento:", error);
+    }
+  };
+
+  const calcularGastosPorCategoria = (movimientos: Movimiento[]) => {
+    const gastosPorCategoria: Record<string, number> = {};
+
+    movimientos
+      .filter((movimiento) => movimiento.tipo === TipoMovimiento.GASTO)
+      .forEach((movimiento) => {
+        if (!gastosPorCategoria[movimiento.categoria]) {
+          gastosPorCategoria[movimiento.categoria] = 0;
+        }
+        gastosPorCategoria[movimiento.categoria] += movimiento.dinero;
+      });
+
+    return gastosPorCategoria;
+  };
+
   if (!account) return null;
-  console.log(account.saldo);
+
+  const gastosPorCategoria = calcularGastosPorCategoria(movimientos);
+  const categorias = Object.keys(gastosPorCategoria);
+  const cantidades = Object.values(gastosPorCategoria);
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto p-4">
       <div
         key={account.id}
-        className="border-b last:border-b-0 p-4 bg-white rounded-lg flex items-center justify-between sm:px-6 sm:py-4 border 1px"
+        className="p-4 bg-white rounded-lg flex items-center justify-between sm:px-6 sm:py-4 border-2 border-black-200"
       >
         <p className="text-lg uppercase font-bold">{account.nombre}</p>
         <p className="text-lg font-semibold">
@@ -81,6 +128,13 @@ const Account = ({ params: { accountId } }: Props) => {
                   year: "numeric",
                 })}
               </p>
+              <button
+                onClick={() => handleEliminarMovimiento(movimiento.id)}
+                className="black font-bold"
+                title="Eliminar movimiento"
+              >
+                ✕
+              </button>
             </div>
           </li>
         ))}
@@ -93,6 +147,50 @@ const Account = ({ params: { accountId } }: Props) => {
         }}
         accountId={account.id}
       />
+
+      {categorias.length > 0 && cantidades.length > 0 && (
+        <Bar
+          data={{
+            labels: categorias,
+            datasets: [
+              {
+                label: "Gastos por Categoría",
+                data: cantidades,
+                backgroundColor: [
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(255, 206, 86, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(255, 159, 64, 0.2)",
+                ],
+                borderColor: [
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(255, 206, 86, 1)",
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(153, 102, 255, 1)",
+                  "rgba(255, 159, 64, 1)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          }}
+          options={{
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "top",
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          }}
+        />
+      )}
     </div>
   );
 };
