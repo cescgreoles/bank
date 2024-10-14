@@ -1,7 +1,5 @@
 import { Cuenta } from "@/lib/types";
 import { useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/lib/firebaseConfig";
 import { User } from "firebase/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

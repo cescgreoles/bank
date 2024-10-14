@@ -45,7 +45,10 @@ const Home = () => {
       <div className="hidden md:flex items-center justify-center w-full h-10 bg-black text-white text-center">
         <p>
           Descarga aquí nuestra aplicación móbil{" "}
-          <Link href="/demmo" className="text-white-500 font-bold underline ">
+          <Link
+            href="/downloadP"
+            className="text-white-500 font-bold underline "
+          >
             aquí
           </Link>
         </p>
@@ -74,31 +77,6 @@ const Home = () => {
             )
           );
         })}
-      </div>
-      <div className="m-3 flex flex-col md:flex-row items-center justify-center md:justify-start md:space-x-4 space-y-4 md:space-y-0">
-        <div className="w-full md:w-48 m-1">
-          <Button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow-lg transition duration-300 transform hover:scale-105">
-            <div className="flex items-center justify-center">
-              <BanknotesIcon className="h-5 w-5 mr-2" />
-              Abre tu cuenta
-            </div>
-          </Button>
-        </div>
-        <div className="w-full md:w-48 m-1">
-          <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow-lg transition duration-300 transform hover:scale-105">
-            <div className="flex items-center justify-center">
-              <ArrowRightOnRectangleIcon className="h-5 w-5 mr-2" /> Comparte y
-              gana
-            </div>
-          </Button>
-        </div>
-        <div className="w-full md:w-48 m-1">
-          <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg shadow-lg transition duration-300 transform hover:scale-105">
-            <div className="flex items-center justify-center">
-              <ArrowPathIcon className="h-5 w-5 mr-2" /> Pagos
-            </div>
-          </Button>
-        </div>
       </div>
       <PopUpBox />
     </main>

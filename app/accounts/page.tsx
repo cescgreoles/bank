@@ -20,7 +20,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogClose,
-} from "@/components/ui/dialog"; // Importamos el Dialog de shadcn/ui
+} from "@/components/ui/dialog";
 
 const Accounts: React.FC = () => {
   const [accounts, setAccounts] = useState<Cuenta[]>([]);
@@ -69,7 +69,6 @@ const Accounts: React.FC = () => {
           </div>
         ))}
 
-        {/* Botón Crear Cuenta con estilo de tarjeta */}
         {user && (
           <Dialog>
             <DialogTrigger asChild>
@@ -85,7 +84,6 @@ const Accounts: React.FC = () => {
                 </DialogDescription>
               </DialogHeader>
 
-              {/* Aquí va el componente CreateAccount */}
               <CreateAccount
                 onCuentaCreada={async (cuenta) => {
                   await crearCuenta(cuenta, user);

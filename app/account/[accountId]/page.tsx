@@ -2,7 +2,6 @@
 
 import CreateTransaction from "@/components/CreateTransaction";
 import {
-  calcularSaldo,
   crearMovimiento,
   obtenerCuentas,
   obtenerMovimientos,

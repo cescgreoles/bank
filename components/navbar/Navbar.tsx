@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
@@ -128,7 +129,7 @@ const Navbar = () => {
                 <Link href="/">Inicio</Link>
               </Button>
               <Button variant="ghost" className="font-bold" asChild>
-                <Link href="/about">Quién somos?</Link>
+                <Link href="/about">Quiénes somos?</Link>
               </Button>
               <Button variant="ghost" className="font-bold" asChild>
                 <Link href="/accounts">Mis Cuentas</Link>

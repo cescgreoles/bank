@@ -8,12 +8,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import Link from "next/link";
 import {
+  CalculatorIcon,
+  ChartBarIcon,
   BanknotesIcon,
-  HomeIcon,
-  CreditCardIcon,
-  ShieldCheckIcon, // Asegúrate de importar el icono deseado
+  UserPlusIcon,
 } from "@heroicons/react/24/outline";
 
 const PopUpBox: React.FC = () => {
@@ -31,29 +30,28 @@ const PopUpBox: React.FC = () => {
   };
 
   const infoTitles: string[] = [
-    "Cuenta de Ahorro con Rendimiento Alto",
-    "Calcula tus gastos de casa",
-    "Tarjeta de Crédito con Recompensas Exclusivas",
-    "Seguro de Vida Protegido",
+    "Calcula tus Gastos",
+    "Calcula tus Ingresos",
+    "Gráficos de Rendimiento Financiero",
+    "Abre una Cuenta con Nosotros",
   ];
 
   const infoTexts: string[] = [
-    "Comienza a ahorrar hoy con nuestra cuenta de ahorro de alto rendimiento. Gana más intereses por tus ahorros, sin comisiones y con acceso a tu dinero en cualquier momento.",
-    "Con nuestra calculadora de gastos de casa, podrás llevar un control de tus gastos mensuales y planificar tu presupuesto de forma eficiente.",
-    "Disfruta de beneficios únicos con nuestra tarjeta de crédito. Obtén cashback, millas aéreas, y descuentos en comercios seleccionados. ¡Haz que cada compra cuente!",
-    "Protege a tu familia con nuestro seguro de vida. Ofrecemos coberturas flexibles y precios accesibles para brindarte tranquilidad en los momentos más difíciles.",
+    "Utiliza nuestra herramienta para calcular tus gastos mensuales de manera precisa. Lleva un control detallado y ajusta tu presupuesto de forma eficiente.",
+    "Mantén un registro claro de tus ingresos. Con nuestra plataforma, puedes visualizar fácilmente el flujo de dinero que entra cada mes.",
+    "Genera gráficos visuales que te permiten entender tu rendimiento financiero. Analiza tus gastos, ingresos y ahorros para mejorar tu gestión.",
+    "Abre una cuenta con nosotros y empieza a gestionar tus finanzas de manera integral. Disfruta de una plataforma segura y confiable para manejar tus ingresos y gastos.",
   ];
 
   const infoIcons = [
+    <CalculatorIcon className="h-10 w-10 text-blue-500 mx-auto" />,
     <BanknotesIcon className="h-10 w-10 text-green-500 mx-auto" />,
-    <HomeIcon className="h-10 w-10 text-blue-500 mx-auto" />,
-    <CreditCardIcon className="h-10 w-10 text-yellow-500 mx-auto" />,
-    <ShieldCheckIcon className="h-10 w-10 text-red-500 mx-auto" />, // Icono de la cuarta carta
+    <ChartBarIcon className="h-10 w-10 text-purple-500 mx-auto" />,
+    <UserPlusIcon className="h-10 w-10 text-red-500 mx-auto" />,
   ];
 
   return (
     <div className="flex flex-wrap gap-4 m-4 mb-8 justify-center">
-      {" "}
       {Array.from({ length: 4 }).map((_, index) => (
         <div
           key={index}
@@ -75,7 +73,7 @@ const PopUpBox: React.FC = () => {
               <div className="my-4">{infoIcons[currentIndex]}</div>
             )}
             <DialogDescription className="text-gray-600">
-              {currentIndex !== null ? infoTexts[currentIndex] : "Cargando..."}{" "}
+              {currentIndex !== null ? infoTexts[currentIndex] : "Cargando..."}
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
