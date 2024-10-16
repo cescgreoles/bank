@@ -72,7 +72,7 @@ const Accounts: React.FC = () => {
         {user && (
           <Dialog>
             <DialogTrigger asChild>
-              <div className="bg-black text-white shadow-md rounded-lg p-6 transition-transform transform hover:scale-105 duration-300 flex flex-col justify-center items-center h-56 w-full cursor-pointer border 1px">
+              <div className="bg-white text-black shadow-md rounded-lg p-6 transition-transform transform hover:scale-105 duration-300 flex flex-col justify-center items-center h-56 w-full cursor-pointer border-2 border-black border-dashed ">
                 <p className="text-4xl font-bold">+</p>
               </div>
             </DialogTrigger>
