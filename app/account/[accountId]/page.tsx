@@ -1,12 +1,7 @@
 "use client";
 
 import CreateTransaction from "@/components/CreateTransaction";
-import {
-  crearMovimiento,
-  obtenerCuentas,
-  obtenerMovimientos,
-  eliminarMovimiento,
-} from "@/lib/accountsServices";
+import { obtenerCuentas } from "@/lib/accountsServices";
 import { auth } from "@/lib/firebaseConfig";
 import { Cuenta, Movimiento, TipoMovimiento } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -22,6 +17,12 @@ import {
   LinearScale,
   BarElement,
 } from "chart.js";
+import { useStore } from "@nanostores/react";
+import {
+  $transactions,
+  createTransaction,
+  deleteTransaction,
+} from "@/lib/nano/transactionServices";
 
 ChartJS.register(
   ArcElement,
@@ -40,8 +41,11 @@ interface Props {
 
 const Account = ({ params: { accountId } }: Props) => {
   const [account, setAccount] = useState<Cuenta | null>(null);
-  const [movimientos, setMovimientos] = useState<Movimiento[]>([]);
+  // const [movimientos, setMovimientos] = useState<Movimiento[]>([]);
+  const movimientos = useStore($transactions);
   const [user] = useAuthState(auth);
+
+  console.log(movimientos);
 
   useEffect(() => {
     const fetch = async () => {
@@ -51,21 +55,8 @@ const Account = ({ params: { accountId } }: Props) => {
     fetch();
   }, [user]);
 
-  useEffect(() => {
-    if (!account) return;
-    const fetch = async () =>
-      setMovimientos(await obtenerMovimientos(account.id));
-    fetch();
-  }, [account]);
-
   const handleEliminarMovimiento = async (movimientoId: string) => {
-    if (!movimientoId) return;
-    try {
-      await eliminarMovimiento(movimientoId);
-      setMovimientos(await obtenerMovimientos(account.id));
-    } catch (error) {
-      console.error("Error al eliminar el movimiento:", error);
-    }
+    deleteTransaction(movimientoId);
   };
 
   const calcularGastosPorCategoria = (movimientos: Movimiento[]) => {
@@ -141,8 +132,7 @@ const Account = ({ params: { accountId } }: Props) => {
 
       <CreateTransaction
         onTransactionCreated={async (transaction) => {
-          await crearMovimiento(transaction);
-          setMovimientos(await obtenerMovimientos(account.id));
+          createTransaction(transaction);
         }}
         accountId={account.id}
       />

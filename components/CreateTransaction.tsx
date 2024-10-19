@@ -3,9 +3,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { v4 as uuidv4 } from "uuid";
 
 interface CreateTransactionProps {
-  onTransactionCreated: (transaction: Omit<Movimiento, "id">) => void;
+  onTransactionCreated: (transaction: Movimiento) => void;
   accountId: string;
 }
 
@@ -28,6 +29,7 @@ const CreateTransaction: React.FC<CreateTransactionProps> = ({
     }
 
     onTransactionCreated({
+      id: uuidv4(),
       fecha: date,
       dinero: money!,
       descripcion: description,
